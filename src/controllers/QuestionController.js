@@ -18,9 +18,24 @@ module.exports = {
         return res.json(question);
     },
 
+    async show (req, res){
+        const {id: _id} = req.params;
+
+        const question = await Question.findOne({_id});
+
+        if(!question){
+            return res.status(400).json({message: "The IdQuestion doesn't exists"});
+        }  
+        
+        return res.json(question);
+    },
+
     async update (req, res){
-        const question = await Question.findByIdAndUpdate({
-            _id: req.params.id,
+        const {id} = req.params;
+
+        const {description, title} = req.body;
+
+        const question = await Question.findByIdAndUpdate(id,{
             description,
             title,
         });
@@ -29,10 +44,10 @@ module.exports = {
     },
 
     async destroy (req, res){
-        const question = await Question.findByIdAndRemove({
-            _id: req.params.id,
-        });
+        const {id} = req.params;
 
-        return res.json(question);
+        await Question.findByIdAndRemove(id);
+
+        return res.json({message:'delete success!!!'});
     }
 }
