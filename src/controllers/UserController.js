@@ -47,20 +47,20 @@ module.exports = {
 
         const password_hash = password + '123';
 
-        /* const userExist = await User.findOne({ user_name });
+        const userExist = await User.findOne({ user_name });
 
         if(userExist){
-            return res.status(400).json({message: "Username already exists"});
-        } */
+            const user = await User.findByIdAndUpdate(id,{
+                first_name,
+                last_name,
+                user_name,
+                password_hash,
+            });
 
-        const user = await User.findByIdAndUpdate(id,{
-            first_name,
-            last_name,
-            user_name,
-            password_hash,
-        });
+            return res.json(user);
+        }        
 
-        return res.json(user);
+        return res.status(400).json({message: "The User doesn't exists"});
     },
     
     async destroy (req, res){
