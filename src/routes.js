@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const UserController = require('./controllers/UserController');
 const QuestionController = require('./controllers/QuestionController');
+const AuthenticationController = require('./controllers/AuthenticationController');
 
 const routes = Router();
 
@@ -16,5 +17,7 @@ routes.get('/questions', QuestionController.index);
 routes.put('/questions/:id', QuestionController.update);
 routes.delete('/questions/:id', QuestionController.destroy);
 routes.get('/questions/:id', QuestionController.show);
+
+routes.post('/auth', AuthenticationController.store);
 
 module.exports = routes;
